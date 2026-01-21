@@ -4,6 +4,8 @@ import { stripe } from "@/lib/stripe";
 import { auth, currentUser } from "@clerk/nextjs/server"; 
 import { redirect } from "next/navigation";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 export const checkoutAction = async (formData: FormData): Promise<void> => {
   // 1. Recuperiamo l'utente loggato da Clerk
   const { userId } = await auth();
@@ -16,22 +18,47 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
 
   // 2. Recuperiamo i prodotti dal carrello inviati dal form
   const itemsJson = formData.get("items") as string;
-  const items = JSON.parse(itemsJson);
 
-  // 3. Mappiamo i prodotti nel formato richiesto da Stripe
-  const line_items = items.map((item: any) => ({
-    price_data: {
-      currency: "eur",
-      product_data: { 
-        name: item.name,
-        // Se non c'è l'immagine, passiamo un array vuoto
-        images: item.image ? [item.image] : [], 
-      },
-      // Il prezzo deve essere in centesimi (es: 10.00€ diventa 1000)
-      unit_amount: item.price,
-    },
-    quantity: item.quantity,
-  }));
+  const items = JSON.parse(formData.get("items") as string);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
+    // 3. Mappiamo i prodotti nel formato richiesto da Stripe
+  const line_items = await Promise.all(
+    items.map(async (item: any) => {
+      // 1. Recuperiamo comunque i dati da Stripe per avere la "officialImage"
+      const stripeProduct = await stripe.products.retrieve(item.id);
+      const officialImage = stripeProduct.images[0];
+      
+      // 2. Prepariamo l'URL della tua immagine locale (quella nel codice)
+      const localImageUrl = `${baseUrl}${item.image}`;
+
+      // 3. LOGICA CONDIZIONALE RICHIESTA
+      let finalCheckoutImage;
+
+      if (isDevelopment) {
+        // SE SIAMO IN LOCALE: 
+        // Priorità a Stripe (così la vedi nel checkout), altrimenti locale
+        finalCheckoutImage = officialImage ? officialImage : localImageUrl;
+      } else {
+        // SE SIAMO IN PRODUZIONE (Vercel): 
+        // Priorità alla tua immagine locale, altrimenti Stripe come backup
+        finalCheckoutImage = localImageUrl ? localImageUrl : officialImage;
+      }
+
+      return {
+        price_data: {
+          currency: "eur",
+          product_data: {
+            name: item.variant ? `${item.name} (${item.variant})` : item.name,
+            images: [finalCheckoutImage], // Stripe vuole sempre un array
+          },
+          unit_amount: item.price,
+        },
+        quantity: item.quantity,
+      };
+    })
+  );
 
   // 4. Creiamo la sessione di pagamento su Stripe
   const session = await stripe.checkout.sessions.create({

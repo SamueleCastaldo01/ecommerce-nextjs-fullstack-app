@@ -2,13 +2,24 @@ import Image from "next/image";
 import { stripe } from "@/lib/stripe";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Carousel } from "@/components/carousel";
+import { PRODUCTS } from "@/constants/products"; // 1. Importa i tuoi prodotti locali
 
 export default async function Home() {
-  const products = await stripe.products.list({
+  const stripeProducts = await stripe.products.list({
     expand: ["data.default_price"],
     limit: 5,
-    active: true, // Recuperiamo solo quelli non archiviati
+    active: true,
+  });
+
+  // 2. Arricchiamo i prodotti Stripe con i dati locali
+  const products = stripeProducts.data.map((stripeProduct) => {
+    const localProduct = PRODUCTS.find((p) => p.id === stripeProduct.id);
+    return {
+      ...stripeProduct,
+      // Se esiste il prodotto locale, usa le sue immagini, altrimenti quelle di Stripe
+      images: localProduct ? localProduct.images : stripeProduct.images,
+      shortDescription: localProduct?.shortDescription || ""
+    };
   });
 
   return (
@@ -35,10 +46,11 @@ export default async function Home() {
             <div className="absolute -inset-1 bg-gradient-to-r from-neutral-200 to-neutral-100 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
             <Image
               alt="Hero Image"
-              src={products.data[0]?.images[0] || "/placeholder.png"}
-              className="relative rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
+              // Usa la prima immagine del prodotto arricchito
+              src={products[0]?.images[0] || "/placeholder.png"}
+              className="relative rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-[1.02] object-cover aspect-[3/2]"
               width={500}
-              height={500}
+              height={333} // Adattato per il 3:2
               priority
             />
           </div>
@@ -57,17 +69,19 @@ export default async function Home() {
           </Link>
         </div>
 
+        {/* GRID PRODOTTI */}
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.data.map((product) => {
+          {products.map((product) => {
             const price = product.default_price as any;
             return (
               <div key={product.id} className="group relative">
-                <div className="aspect-square w-full overflow-hidden rounded-lg bg-neutral-100 group-hover:opacity-90 transition-opacity border border-neutral-200">
+                {/* 3. CAMBIATO ASPECT-SQUARE IN ASPECT-[3/2] */}
+                <div className="aspect-[3/2] w-full overflow-hidden rounded-lg bg-neutral-100 group-hover:opacity-90 transition-opacity border border-neutral-200">
                   <Image
-                    src={product.images[0]}
+                    src={product.images[0]} // Questa ora è l'immagine locale!
                     alt={product.name}
                     width={400}
-                    height={400}
+                    height={267} // Adattato per il 3:2
                     className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
@@ -79,7 +93,9 @@ export default async function Home() {
                         {product.name}
                       </Link>
                     </h3>
-                    <p className="mt-1 text-xs text-neutral-500">Decorazione 3D</p>
+                    <p className="mt-1 text-xs text-neutral-500">
+                      {product.shortDescription || "Decorazione 3D"}
+                    </p>
                   </div>
                   <p className="text-sm font-bold text-black">
                     {(price.unit_amount / 100).toLocaleString("it-IT", {
