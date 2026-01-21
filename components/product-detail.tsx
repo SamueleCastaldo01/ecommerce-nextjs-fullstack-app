@@ -22,6 +22,7 @@ export const ProductDetail = ({ product }: Props) => {
       price: price.unit_amount as number,
       imageUrl: product.images ? product.images[0] : null,
       quantity: 1,
+      image: product.images ? product.images[0] : "",
     });
   };
 
