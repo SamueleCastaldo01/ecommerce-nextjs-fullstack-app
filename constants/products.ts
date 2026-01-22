@@ -24,7 +24,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "prod_TpnM3L9BAE6mlr",
     stripePriceId: "price_1Ss7luPS0wKGamkbzVtpmGJe", 
-    name: "Vaso Geometrico Moderno",
+    name: "Prova prodotto",
     shortDescription: "Vaso stampato in 3D con design a spirale.",
     longDescription: "Questo vaso è stato progettato per massimizzare la rifrazione della luce. Stampato con un'altezza layer di 0.2mm per una finitura liscia e resistente.",
     price: 1000,

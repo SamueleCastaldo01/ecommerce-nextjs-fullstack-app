@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // 1. Importiamo usePathname
+import { Package } from "lucide-react";
+import { usePathname } from "next/navigation";
 import {
   ShoppingCartIcon,
   Bars3Icon,
@@ -15,6 +16,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import { STORE_SETTINGS } from "@/constants/settings";
 import { CartSidebar } from "./CartSidebar";
+import { SearchModal } from "./SearchModal";
 
 export const Navbar = () => {
   const pathname = usePathname(); // 2. Inizializziamo il hook
@@ -60,12 +62,7 @@ export const Navbar = () => {
         {/* Links Desktop */}
         <div className="hidden md:flex items-center space-x-8">
           <Link href="/" className={linkStyles("/")}>Home</Link>
-          <Link href="/products" className={linkStyles("/products")}>Products</Link>
-          
-          {/* Aggiungiamo il link agli Ordini per comodità dell'utente loggato */}
-          <SignedIn>
-            <Link href="/orders" className={linkStyles("/orders")}>Orders</Link>
-          </SignedIn>
+          <Link href="/products" className={linkStyles("/products")}>Prodotti</Link>
         </div>
 
         <div className="flex items-center space-x-5">
@@ -88,9 +85,20 @@ export const Navbar = () => {
                     userButtonAvatarBox: "h-9 w-9 border-2 border-neutral-100"
                   }
                 }}
-              />
+              >
+                {/* Questo è il pezzo da aggiungere */}
+                <UserButton.MenuItems>
+                  <UserButton.Link
+                    label="I miei Ordini"
+                    labelIcon={<Package size={16} />}
+                    href="/orders"
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
             </SignedIn>
           </div>
+
+          <SearchModal />
 
           <CartSidebar />
 

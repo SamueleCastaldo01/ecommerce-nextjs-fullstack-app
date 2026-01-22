@@ -22,7 +22,7 @@ export function Footer() {
             <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">Negozio</h4>
             <ul className="space-y-2 text-sm text-neutral-400">
               <li><Link href="/products" className="hover:text-white transition">Tutti i Prodotti</Link></li>
-              <li><Link href="/#trending" className="hover:text-white transition">Pezzi di Tendenza</Link></li>
+              <li><Link href="/#trending" className="hover:text-white transition">Prodotti di Tendenza</Link></li>
               <li><Link href="/new-arrivals" className="hover:text-white transition">Nuovi Arrivi</Link></li>
               <li><Link href="/collections" className="hover:text-white transition">Collezioni</Link></li>
             </ul>
@@ -44,9 +44,7 @@ export function Footer() {
             <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">Seguici</h4>
             <div className="flex space-x-4 mb-4">
                {/* Sostituisci con le tue icone se le hai, qui uso testo per semplicità */}
-               <Link href="#" className="text-neutral-400 hover:text-white">IG</Link>
-               <Link href="#" className="text-neutral-400 hover:text-white">FB</Link>
-               <Link href="#" className="text-neutral-400 hover:text-white">TK</Link>
+               <Link target="_blank" href="https://www.tiktok.com/@cleanstudio01?_r=1&_t=ZN-93HzaQTB1YU" className="text-neutral-400 hover:text-white">Tik Tok</Link>
             </div>
             <p className="text-sm text-neutral-400">{STORE_SETTINGS.INFO_EMAIL}</p>
           </div>
@@ -56,7 +54,6 @@ export function Footer() {
         <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500">
           <p>© {new Date().getFullYear()} {STORE_SETTINGS.NAME}. Tutti i diritti riservati.</p>
           <div className="flex space-x-4">
-            <span>P.IVA 12345678901</span>
             <span>Made with passion & 3D Printers</span>
           </div>
         </div>
