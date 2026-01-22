@@ -3,6 +3,7 @@ import { stripe } from "@/lib/stripe";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PRODUCTS } from "@/constants/products"; 
+import { ProductCard } from "@/components/product-card";
 
 export default async function Home() {
   // Recupero prodotti da Stripe
@@ -18,7 +19,9 @@ export default async function Home() {
     return {
       ...stripeProduct,
       images: localProduct ? localProduct.images : stripeProduct.images,
-      shortDescription: localProduct?.shortDescription || "Design Sostenibile"
+      shortDescription: localProduct?.shortDescription || "Design Sostenibile",
+      salePrice: localProduct?.salePrice,
+      variants: localProduct?.variants,
     };
   });
 
@@ -81,46 +84,9 @@ export default async function Home() {
 
         {/* GRID PRODOTTI */}
         <div className="grid grid-cols-1 gap-y-12 gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((product) => {
-            const price = product.default_price as any;
-            return (
-              <div key={product.id} className="group relative flex flex-col">
-                {/* Contenitore Immagine 3:2 */}
-                <div className="aspect-[3/2] w-full overflow-hidden rounded-2xl bg-neutral-100 border border-neutral-200 transition-all duration-500 group-hover:shadow-xl">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    width={500}
-                    height={333}
-                    className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                  />
-                  {/* Overlay leggero al passaggio del mouse */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
-                </div>
-
-                {/* Info Prodotto */}
-                <div className="mt-5 flex justify-between items-start">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-bold text-neutral-900 leading-tight">
-                      <Link href={`/products/${product.id}`}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.name}
-                      </Link>
-                    </h3>
-                    <p className="text-sm text-neutral-500 font-medium italic">
-                      {product.shortDescription}
-                    </p>
-                  </div>
-                  <p className="text-lg font-black text-black tracking-tighter">
-                    {(price.unit_amount / 100).toLocaleString("it-IT", {
-                      style: "currency",
-                      currency: "EUR",
-                    })}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+          {products.map((product: any) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </section>
     </div>

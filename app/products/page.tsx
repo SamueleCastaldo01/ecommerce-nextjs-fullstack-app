@@ -18,6 +18,8 @@ export default async function ProductsPage() {
       // Se esiste il prodotto locale, usiamo le sue immagini, 
       // altrimenti teniamo quella di Stripe (fallback)
       images: localProduct ? localProduct.images : stripeProduct.images,
+      salePrice: localProduct?.salePrice,
+      variants: localProduct?.variants,
     };
   });
 

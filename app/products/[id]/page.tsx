@@ -28,6 +28,8 @@ export default async function ProductPage({
     images: localProduct ? localProduct.images : stripeProduct.images,
     longDescription: localProduct?.longDescription || stripeProduct.description,
     variants: localProduct?.variants || [],
+    hasSizes: localProduct?.hasSizes,
+    salePrice: localProduct?.salePrice,
   };
 
   return <ProductDetail product={enrichedProduct} />;

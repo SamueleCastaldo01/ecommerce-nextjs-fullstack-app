@@ -5,6 +5,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { SHIPPING_SETTINGS } from "@/constants/settings";
 
 export const checkoutAction = async (formData: FormData): Promise<void> => {
   // 1. Recuperiamo l'utente loggato da Clerk
@@ -77,13 +78,13 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
         type: 'fixed_amount',
         fixed_amount: {
           // Se il totale è >= 50€, mette 0, altrimenti 6€
-          amount: cartTotal >= threshold ? 0 : 600, 
-          currency: 'eur',
+          amount: cartTotal >= SHIPPING_SETTINGS.THRESHOLD ? 0 : SHIPPING_SETTINGS.BASE_COST,
+          currency: SHIPPING_SETTINGS.CURRENCY,
         },
-        display_name: cartTotal >= threshold ? 'Spedizione Gratuita' : 'Spedizione Standard',
+        display_name: cartTotal >= SHIPPING_SETTINGS.THRESHOLD ? 'Spedizione Gratuita' : 'Spedizione Standard',
         delivery_estimate: {
-          minimum: { unit: 'business_day', value: 3 },
-          maximum: { unit: 'business_day', value: 5 },
+          minimum: { unit: 'business_day', value: SHIPPING_SETTINGS.MIN_DAYS },
+          maximum: { unit: 'business_day', value: SHIPPING_SETTINGS.MAX_DAYS },
         },
       },
     },
@@ -107,7 +108,7 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
 
     allow_promotion_codes: true,
     shipping_address_collection: {
-      allowed_countries: ['IT'], 
+      allowed_countries: SHIPPING_SETTINGS.ALLOWED_COUNTRIES as any,
     },
     phone_number_collection: {
       enabled: true,

@@ -16,6 +16,8 @@ interface CartStore {
   addItem: (item: CartItem) => void;
   removeItem: (id: string, variant?: string) => void;
   clearCart: () => void;
+  isCartOpen: boolean; 
+  setCartOpen: (isOpen: boolean) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -37,6 +39,9 @@ export const useCartStore = create<CartStore>()(
           return { items: [...state.items, newItem] };
         });
       },
+      
+      isCartOpen: false, // Inizia chiuso
+      setCartOpen: (open) => set({ isCartOpen: open }),
 
       removeItem: (id: string, variant?: string) => {
         set((state) => {

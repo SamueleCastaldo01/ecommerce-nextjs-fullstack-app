@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import { STORE_SETTINGS } from "@/constants/settings";
+import { CartSidebar } from "./CartSidebar";
 
 export const Navbar = () => {
   const pathname = usePathname(); // 2. Inizializziamo il hook
@@ -45,14 +47,14 @@ export const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter">
           <Image
-            src="/logo.png" 
+            src= {STORE_SETTINGS.LOGO_URL} 
             alt="Clean Studio Logo" 
             width={35}  
             height={35} 
             className="object-contain"
             priority 
           />
-          <span>Clean Studio</span>
+          <span>{STORE_SETTINGS.NAME}</span>
         </Link>
 
         {/* Links Desktop */}
@@ -90,15 +92,7 @@ export const Navbar = () => {
             </SignedIn>
           </div>
 
-          {/* ICONA CARRELLO */}
-          <Link href="/checkout" className={`relative p-1 transition-colors ${pathname === '/checkout' ? 'text-black' : 'text-neutral-500'}`}>
-            <ShoppingCartIcon className="h-6 w-6" />
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] text-white font-extrabold shadow-sm">
-                {cartCount}
-              </span>
-            )}
-          </Link>
+          <CartSidebar />
 
           {/* MENU MOBILE TOGGLE */}
           <Button

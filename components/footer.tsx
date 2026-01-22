@@ -1,3 +1,4 @@
+import { STORE_SETTINGS } from "@/constants/settings";
 import Link from "next/link";
 
 export function Footer() {
@@ -8,7 +9,7 @@ export function Footer() {
           
           {/* Colonna 1: Brand & Bio */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold tracking-tighter">Clean Studio</h3>
+            <h3 className="text-xl font-bold tracking-tighter">{STORE_SETTINGS.NAME}</h3>
             <p className="text-sm text-neutral-400 leading-relaxed">
               Design futuristico e manifattura digitale. 
               Creiamo pezzi unici in stampa 3D per trasformare 
@@ -47,13 +48,13 @@ export function Footer() {
                <Link href="#" className="text-neutral-400 hover:text-white">FB</Link>
                <Link href="#" className="text-neutral-400 hover:text-white">TK</Link>
             </div>
-            <p className="text-sm text-neutral-400">info@cleanstudio.it</p>
+            <p className="text-sm text-neutral-400">{STORE_SETTINGS.INFO_EMAIL}</p>
           </div>
         </div>
 
         {/* Copyright & Bottom */}
         <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500">
-          <p>© {new Date().getFullYear()} Clean Studio. Tutti i diritti riservati.</p>
+          <p>© {new Date().getFullYear()} {STORE_SETTINGS.NAME}. Tutti i diritti riservati.</p>
           <div className="flex space-x-4">
             <span>P.IVA 12345678901</span>
             <span>Made with passion & 3D Printers</span>

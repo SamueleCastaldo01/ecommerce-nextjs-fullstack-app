@@ -7,6 +7,7 @@ import { useCartStore } from "@/store/cart-store";
 import { checkoutAction } from "./checkout-action";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { SHIPPING_SETTINGS } from "@/constants/settings";
 
 export default function CheckoutPage() {
   const { items, removeItem, addItem } = useCartStore();
@@ -18,8 +19,8 @@ export default function CheckoutPage() {
   );
 
   // LOGICA SPEDIZIONE
-  const threshold = 5000; // 50€ in centesimi
-  const shippingCost = total >= threshold ? 0 : 600; // 0€ se >= 50€, altrimenti 6€
+  const threshold = SHIPPING_SETTINGS.THRESHOLD;
+  const shippingCost = total >= threshold ? 0 : SHIPPING_SETTINGS.BASE_COST;
   const missingAmount = threshold - total;
   const progressPercentage = Math.min((total / threshold) * 100, 100);
 
@@ -60,7 +61,7 @@ export default function CheckoutPage() {
                 </p>
               )}
             </div>
-            <span className="text-[10px] font-bold text-neutral-300 uppercase">Target €50.00</span>
+            <span className="text-[10px] font-bold text-neutral-500 uppercase">Target €{(threshold / 100).toFixed(2)}</span>
           </div>
 
           <div className="h-1.5 w-full bg-neutral-100 rounded-full overflow-hidden">

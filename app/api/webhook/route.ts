@@ -2,6 +2,7 @@ import { stripe } from "@/lib/stripe";
 import { resend } from "@/lib/resend";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { STORE_SETTINGS } from "@/constants/settings";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -40,9 +41,9 @@ export async function POST(req: Request) {
     // --- 1. INVIO EMAIL AL CLIENTE ---
     if (customerEmail) {
       await resend.emails.send({
-        from: "Clean Studio <onboarding@resend.dev>",
+        from: "${STORE_SETTINGS.NAME} <onboarding@resend.dev>",
         to: customerEmail,
-        subject: `Conferma Ordine - Clean Studio 3D`,
+        subject: `Conferma Ordine - ${STORE_SETTINGS.NAME}`,
         html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee;">
             <h2>Grazie per l'ordine, ${customerName}!</h2>
@@ -61,7 +62,7 @@ export async function POST(req: Request) {
     // --- 2. INVIO NOTIFICA A TE (PROPRIETARIO) ---
     // Inserisci qui la tua email personale
     await resend.emails.send({
-      from: "Clean Studio <onboarding@resend.dev>",
+      from: "${STORE_SETTINGS.NAME} <onboarding@resend.dev>",
       to: "castaldo.samuele@gmail.com",
       subject: `🚀 Nuovo Ordine da produrre! - ${customerName}`,
       html: `
