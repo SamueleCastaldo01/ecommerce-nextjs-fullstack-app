@@ -38,7 +38,7 @@ export const PRODUCTS: Product[] = [
       { id: "v1", name: "Bianco", colorCode: "#f0f0f0" },
       { id: "v2", name: "Nero", colorCode: "#333333" }
     ],
-    category: "Home Decor"
+    category: "vasi"
   },
   {
     id: "prod_portachiavi_semplice",

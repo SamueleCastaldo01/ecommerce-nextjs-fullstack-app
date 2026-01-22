@@ -33,7 +33,7 @@ export function SearchModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="p-1 text-neutral-500 hover:text-black transition-colors outline-none"
+        className="p-1 text-black hover:text-black transition-colors outline-none"
       >
         <MagnifyingGlassIcon className="h-6 w-6" />
       </button>

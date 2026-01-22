@@ -92,7 +92,7 @@ export default function ShippingPage() {
 
       {/* CONTATTO FINALE */}
       <div className="mt-20 text-center">
-        <p className="text-neutral-300 font-bold uppercase text-[9px] tracking-[0.4em] mb-4 italic">Hai bisogno di aiuto con una spedizione?</p>
+        <p className="text-neutral-500 font-bold uppercase text-[9px] tracking-[0.4em] mb-4 italic">Hai bisogno di aiuto con una spedizione?</p>
         <a 
           href={`mailto:${STORE_SETTINGS.SUPPORT_EMAIL}`}
           className="text-black font-black italic uppercase tracking-tighter text-lg border-b-2 border-black pb-1 hover:text-neutral-400 hover:border-neutral-400 transition-all"

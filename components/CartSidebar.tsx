@@ -13,6 +13,7 @@ import { SHIPPING_SETTINGS } from "@/constants/settings";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
+import { CheckoutButton } from "./CheckoutButton";
 
 export function CartSidebar() {
   const isOpen = useCartStore((state) => state.isCartOpen);
@@ -161,9 +162,7 @@ export function CartSidebar() {
             <SignedIn>
               <form action={checkoutAction}>
                 <input type="hidden" name="items" value={JSON.stringify(items)} />
-                <Button className="w-full py-7 rounded-[1.5rem] bg-black text-white font-black uppercase tracking-widest hover:bg-neutral-800 transition-all">
-                  Acquista Ora
-                </Button>
+                <CheckoutButton />
               </form>
             </SignedIn>
 
