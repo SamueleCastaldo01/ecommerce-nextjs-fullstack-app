@@ -32,9 +32,9 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">Supporto</h4>
             <ul className="space-y-2 text-sm text-neutral-400">
-              <li><Link href="/spedizioni" className="hover:text-white transition">Spedizioni & Resi</Link></li>
+              <li><Link href="/shipping" className="hover:text-white transition">Spedizioni & Resi</Link></li>
               <li><Link href="/faq" className="hover:text-white transition">Domande Frequenti</Link></li>
-              <li><Link href="/termini" className="hover:text-white transition">Termini e Condizioni</Link></li>
+              <li><Link href="/terms" className="hover:text-white transition">Termini e Condizioni</Link></li>
               <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
             </ul>
           </div>
