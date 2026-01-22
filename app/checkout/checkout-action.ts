@@ -60,23 +60,48 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
     })
   );
 
+  const cartSummary = items.map((i: any) => `${i.name} (${i.variant || 'No var'}) x${i.quantity}`).join(', ');
+
+  //costi di spedizione condizionali
+  const cartTotal = items.reduce((acc: number, item: any) => acc + (item.price * item.quantity), 0);
+  const threshold = 5000; // 50€ in centesimi
+
   // 4. Creiamo la sessione di pagamento su Stripe
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card", "paypal"],
     line_items,
     mode: "payment",
+    shipping_options: [
+    {
+      shipping_rate_data: {
+        type: 'fixed_amount',
+        fixed_amount: {
+          // Se il totale è >= 50€, mette 0, altrimenti 6€
+          amount: cartTotal >= threshold ? 0 : 600, 
+          currency: 'eur',
+        },
+        display_name: cartTotal >= threshold ? 'Spedizione Gratuita' : 'Spedizione Standard',
+        delivery_estimate: {
+          minimum: { unit: 'business_day', value: 3 },
+          maximum: { unit: 'business_day', value: 5 },
+        },
+      },
+    },
+  ],
     
     customer_email: user?.emailAddresses[0].emailAddress,
     
     // 1. Metadati sulla Sessione (quelli che hai già)
     metadata: {
       clerkUserId: userId,
+      orderItems: cartSummary.substring(0, 500),
     },
 
     // 2. AGGIUNGI QUESTO: Metadati sul Pagamento effettivo
     payment_intent_data: {
       metadata: {
         clerkUserId: userId,
+        orderItems: cartSummary.substring(0, 500),
       },
     },
 

@@ -14,7 +14,7 @@ export interface CartItem {
 interface CartStore {
   items: CartItem[];
   addItem: (item: CartItem) => void;
-  removeItem: (id: string) => void;
+  removeItem: (id: string, variant?: string) => void;
   clearCart: () => void;
 }
 
@@ -22,33 +22,42 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
       items: [],
-      addItem: (item) =>
+      addItem: (newItem) => {
         set((state) => {
-          const existing = state.items.find((i) => i.id === item.id);
+          const existingItemIndex = state.items.findIndex(
+            (item) => item.id === newItem.id && item.variant === newItem.variant
+          );
 
-          if (existing) {
-            return {
-              items: state.items.map((i) =>
-                i.id === item.id
-                  ? { ...i, quantity: i.quantity + item.quantity }
-                  : i
-              ),
-            };
+          if (existingItemIndex !== -1) {
+            const updatedItems = [...state.items];
+            updatedItems[existingItemIndex].quantity += newItem.quantity;
+            return { items: updatedItems };
           }
 
-          return { items: [...state.items, item] };
-        }),
+          return { items: [...state.items, newItem] };
+        });
+      },
 
-      removeItem: (id) =>
+      removeItem: (id: string, variant?: string) => {
         set((state) => {
-          return {
-            items: state.items
-              .map((item) =>
-                item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-              )
-              .filter((item) => item.quantity > 0),
-          };
-        }),
+          const existingItemIndex = state.items.findIndex(
+            (item) => item.id === id && item.variant === variant
+          );
+
+          if (existingItemIndex === -1) return state;
+
+          const updatedItems = [...state.items];
+          const item = updatedItems[existingItemIndex];
+
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+          } else {
+            updatedItems.splice(existingItemIndex, 1);
+          }
+
+          return { items: updatedItems };
+        });
+      },
       clearCart: () =>
         set(() => {
           return { items: [] };
