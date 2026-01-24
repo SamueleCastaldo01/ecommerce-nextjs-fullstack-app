@@ -21,7 +21,7 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-widest mb-4">Negozio</h4>
             <ul className="space-y-2 text-sm text-neutral-400">
-              <li><Link href="/products" className="hover:text-white transition">Tutti i Prodotti</Link></li>
+              <li><Link href="/all" className="hover:text-white transition">Tutti i Prodotti</Link></li>
               <li><Link href="/#trending" className="hover:text-white transition">Prodotti di Tendenza</Link></li>
               <li><Link href="/new-arrivals" className="hover:text-white transition">Nuovi Arrivi</Link></li>
               <li><Link href="/collections" className="hover:text-white transition">Collezioni</Link></li>

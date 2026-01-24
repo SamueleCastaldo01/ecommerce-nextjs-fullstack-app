@@ -13,6 +13,7 @@ import Image from "next/image";
 type Props = {
   images: string[];
   productName: string;
+  activeImage?: string; // Nuova prop per forzare il cambio immagine
   onShare?: () => void;
   className?: string;
 };
@@ -20,17 +21,27 @@ type Props = {
 export default function ProductGallery({
   images,
   productName,
+  activeImage,
   onShare,
   className,
 }: Props) {
   const [active, setActive] = useState(0);
-  const mainRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<HTMLButtonElement[]>([]);
 
   const normalized = useMemo(
     () => (images || []).map((src) => src || ""),
     [images]
   );
+
+  // SINCRONIZZAZIONE: Se il padre cambia activeImage, la gallery si sposta
+  useEffect(() => {
+    if (activeImage) {
+      const index = normalized.findIndex((img) => img === activeImage);
+      if (index !== -1) {
+        setActive(index);
+      }
+    }
+  }, [activeImage, normalized]);
 
   const hasImages = normalized.length > 0;
   const activeSrc = normalized[active] ?? "";
@@ -54,17 +65,14 @@ export default function ProductGallery({
   return (
     <div className={`flex flex-col gap-4 ${className || ""}`}>
       
-      {/* 1. IMMAGINE PRINCIPALE (FORMATO 3:2) */}
-      <div
-        ref={mainRef}
-        className="relative w-full aspect-[3/2] rounded-2xl bg-white border border-gray-100 overflow-hidden group shadow-sm"
-      >
+      {/* 1. IMMAGINE PRINCIPALE */}
+      <div className="relative w-full aspect-[3/2] rounded-2xl bg-white border border-gray-100 overflow-hidden group shadow-sm">
         <Image
           src={activeSrc}
           alt={productName}
           fill
           priority
-          className="object-cover select-none transition-all duration-300"
+          className="object-cover select-none transition-all duration-500 ease-in-out"
           draggable={false}
         />
 
@@ -95,8 +103,8 @@ export default function ProductGallery({
         )}
       </div>
 
-      {/* 2. MINIATURE (SOTTO - FORMATO 3:2) */}
-      <div className="flex gap-3 overflow-x-auto no-scrollbar py-2">
+      {/* 2. MINIATURE */}
+      <div className="flex gap-3 overflow-x-auto no-scrollbar py-2 px-1">
         {normalized.map((url, i) => {
           const isActive = i === active;
           return (
@@ -104,15 +112,14 @@ export default function ProductGallery({
               key={i}
               type="button"
               ref={(el) => { if (el) thumbRefs.current[i] = el; }}
-              // CAMBIA AL PASSAGGIO DEL MOUSE
               onMouseEnter={() => setActive(i)} 
               onClick={() => setActive(i)}
               className={`
                 relative shrink-0 rounded-xl overflow-hidden border-2 transition-all
                 w-24 aspect-[3/2] bg-gray-50
                 ${isActive 
-                  ? "border-black ring-2 ring-black/5 scale-105 z-10 opacity-100" 
-                  : "border-transparent opacity-60 hover:opacity-100 hover:border-gray-300"}
+                  ? "border-black ring-2 ring-black/5 scale-105 z-10 opacity-100 shadow-sm" 
+                  : "border-transparent opacity-50 hover:opacity-100 hover:border-gray-200"}
               `}
             >
               <Image

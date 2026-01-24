@@ -19,14 +19,37 @@ export function SearchModal() {
         product.shortDescription?.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
-  useEffect(() => {
+useEffect(() => {
+    // Funzione per aprire con CMD+K o CTRL+K
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsOpen(true);
+      }
+      if (e.key === "Escape") setIsOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      inputRef.current?.focus();
+      
+      // Il trucco: un piccolissimo timeout (anche 10ms) assicura che il 
+      // browser abbia iniziato a renderizzare il modal prima del focus
+      const timeout = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50); 
+      
+      return () => {
+        clearTimeout(timeout);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     } else {
       document.body.style.overflow = "unset";
       setSearchQuery("");
     }
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
   return (
@@ -58,6 +81,7 @@ export function SearchModal() {
             <MagnifyingGlassIcon className="h-6 w-6 text-neutral-400" />
             <input
               ref={inputRef}
+              autoFocus
               type="text"
               placeholder="Cerca un prodotto..."
               className="flex-1 bg-transparent text-lg sm:text-xl font-bold outline-none text-black placeholder:text-neutral-300 italic tracking-tighter"

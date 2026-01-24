@@ -29,7 +29,7 @@ export default async function Home() {
     <div className="space-y-20 pb-16">
       
       {/* SECTION HERO - GLASSMORPHISM DESIGN */}
-      <section className="relative overflow-hidden rounded-[2.5rem] border border-white/40 bg-white/30 py-16 backdrop-blur-xl sm:py-24 shadow-2xl mx-2">
+      <section className="relative overflow-hidden rounded-[2.5rem] border border-white/40 bg-white/30 py-16 backdrop-blur-xl sm:py-24 shadow-[0_0_40px_-14px_rgba(0,0,0,0.7)] mx-2">
         {/* Riflessi di luce soffusi dietro il vetro */}
         <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-neutral-200/40 blur-[100px]" />
         <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-neutral-100/30 blur-[100px]" />
@@ -53,14 +53,16 @@ export default async function Home() {
           </div>
 
           {/* Immagine Hero con effetto profondità */}
-          <div className="relative group">
+          <div className="relative group w-full max-w-lg mx-auto lg:max-w-xl">
             <div className="absolute -inset-1 bg-white/40 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             <Image
               alt="Collezione Principale"
-              src={products[0]?.images[0] || "/placeholder.png"}
-              className="relative rounded-2xl shadow-2xl transition-all duration-700 group-hover:scale-[1.03] object-cover aspect-[3/2] border border-white/20"
-              width={600}
+              src={"/images/felpa.png"}
+              width={600} 
               height={400}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={95}
+              className="relative rounded-2xl shadow-2xl transition-all duration-700 group-hover:scale-[1.03] object-cover aspect-[3/2] w-full h-auto"
               priority
             />
           </div>

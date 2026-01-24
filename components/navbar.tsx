@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Package } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { CATEGORIES } from "@/constants/categories";
 import {
   ShoppingCartIcon,
   Bars3Icon,
@@ -36,13 +37,18 @@ export const Navbar = () => {
 
   // 3. Funzione helper per definire lo stile dei link
   const linkStyles = (path: string) => {
-    const isActive = pathname === path;
-    return `${
-      isActive 
-        ? "text-black font-bold border-b-2 border-black" // Stile attivo (con una piccola linea sotto se vuoi)
-        : "text-neutral-500 hover:text-black font-medium" // Stile normale
-    } transition-all duration-200 pb-1`;
-  };
+  const isCategoryPage = CATEGORIES.some(cat => pathname === `/${cat.slug}`);
+  
+  const isActive = path === "/all" 
+    ? (pathname === "/all" || isCategoryPage) 
+    : pathname === path;
+
+  return `${
+    isActive 
+      ? "text-black font-bold border-b-2 border-black" 
+      : "text-neutral-500 hover:text-black font-medium"
+  } transition-all duration-200 pb-1`;
+};
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-neutral-100">
@@ -62,7 +68,8 @@ export const Navbar = () => {
         {/* Links Desktop */}
         <div className="hidden md:flex items-center space-x-8">
           <Link href="/" className={linkStyles("/")}>Home</Link>
-          <Link href="/products" className={linkStyles("/products")}>Prodotti</Link>
+          {/* Cambiato in /all per coerenza con il href */}
+          <Link href="/all" className={linkStyles("/all")}>Prodotti</Link>
         </div>
 
         <div className="flex items-center space-x-5">
@@ -128,11 +135,15 @@ export const Navbar = () => {
             </li>
             <li>
               <Link 
-                href="/products" 
-                className={`text-lg ${pathname === '/products' ? 'font-bold text-black' : 'text-neutral-500'}`} 
+                href="/all" 
+                className={`text-lg ${
+                  (pathname === "/all" || CATEGORIES.some(cat => pathname === `/${cat.slug}`)) 
+                  ? 'font-bold text-black' 
+                  : 'text-neutral-500'
+                }`} 
                 onClick={() => setMobileOpen(false)}
               >
-                Products
+                Prodotti
               </Link>
             </li>
             <SignedIn>

@@ -5,24 +5,20 @@ export const CATEGORIES = [
     slug: "all",
     description: "L'intera collezione Studio 3D."
   },
+  // NUOVA: Per i portapenne e roba da scrivania
   {
-    id: "vasi",
-    name: "Vasi & Home",
-    slug: "vasi",
-    description: "Forme organiche per i tuoi spazi.",
-    subcategories: ["Organici", "Geometrici", "Mini"]
+    id: "office",
+    name: "Ufficio",
+    slug: "office",
+    description: "Design funzionale per il tuo workspace.",
+    subcategories: ["Portapenne", "Supporti Tech", "Organizer"]
   },
+  // NUOVA: Per le statuette e regali
   {
-    id: "lampade",
-    name: "Lighting",
-    slug: "lampade",
-    description: "La luce incontra la produzione additiva.",
-    subcategories: ["Da tavolo", "Sospensione"]
-  },
-  {
-    id: "wall-art",
-    name: "Wall Art",
-    slug: "wall-art",
-    description: "Geometrie da appendere."
+    id: "regali",
+    name: "Idee Regalo",
+    slug: "regali",
+    description: "Pensieri unici per momenti speciali.",
+    subcategories: ["Festa del Papà", "Personalizzati", "Statuette"]
   }
 ];

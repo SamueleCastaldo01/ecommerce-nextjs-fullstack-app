@@ -2,8 +2,10 @@
 
 export interface ProductVariant {
   id: string;
-  name: string; // es: "PLA Bianco", "PETG Nero"
-  colorCode: string; // es: "#FFFFFF"
+  name: string;      // es: "Legno", "Fibra di Carbonio", "Rosso"
+  type?: string;      // es: "material", "color", "finish"
+  imageUrl?: string; // L'immagine specifica per questa scelta
+  colorCode?: string; // Opzionale, se è un colore
 }
 
 export interface Product {
@@ -17,6 +19,8 @@ export interface Product {
   images: string[]; // Array di percorsi: ["/images/products/vaso-1.jpg", ...]
   variants?: ProductVariant[];
   category: string;
+  subcategory?: string;
+  relatedIds?: string[];
   hasSizes?: boolean; // Se il prodotto ha opzioni di taglia
 }
 
@@ -31,14 +35,16 @@ export const PRODUCTS: Product[] = [
     salePrice: 800,
     images: [
       "/images/products/Copertina.png",
-      "/images/products/Copertina.png",
+      "/images/products/prova.png",
       "/images/products/Copertina.png",
     ],
     variants: [
-      { id: "v1", name: "Bianco", colorCode: "#f0f0f0" },
-      { id: "v2", name: "Nero", colorCode: "#333333" }
+      { id: "v1", name: "Bianco", colorCode: "#f0f0f0", imageUrl: "/images/products/prova.png", type: "color" },
+      { id: "v2", name: "Nero", colorCode: "#333333", imageUrl: "/images/products/Copertina.png", type: "color" }
     ],
-    category: "vasi"
+    category: "regali",
+    subcategory: "Festa del Papà",
+    relatedIds: ["prod_portachiavi_semplice"],
   },
   {
     id: "prod_portachiavi_semplice",

@@ -1,36 +1,36 @@
-import { ProductDetail } from "@/components/product-detail";
-import { stripe } from "@/lib/stripe";
-import { PRODUCTS } from "@/constants/products"; // Importa i tuoi dati locali
+// app/products/[id]/page.tsx
+
 import { notFound } from "next/navigation";
+import { PRODUCTS } from "@/constants/products";
+import { getRelatedProducts } from "@/app/actions/get-products";
+import { ProductCard } from "@/components/product-card";
+import { ProductDetail } from "@/components/product-detail";
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const product = PRODUCTS.find((p) => p.id === id);
 
-  // 1. Cerchiamo il prodotto nei dati locali usando l'ID
-  const localProduct = PRODUCTS.find((p) => p.id === id);
+  if (!product) notFound();
 
-  // 2. Prendiamo i dati da Stripe per avere il prezzo aggiornato
-  // Se non lo trova su Stripe, la pagina va in errore
-  const stripeProduct = await stripe.products.retrieve(id, {
-    expand: ["default_price"],
-  });
+  // Recuperiamo i correlati
+  const relatedProducts = await getRelatedProducts(product as any);
 
-  if (!stripeProduct) return notFound();
+  return (
+    <main className="min-h-screen bg-white">
+      {/* 1. Dettaglio Prodotto */}
+      <ProductDetail product={product as any} />
 
-  // 3. Creiamo un oggetto unico che unisce i due mondi
-  // Diamo priorità alle immagini locali se esistono
-  const enrichedProduct = {
-    ...JSON.parse(JSON.stringify(stripeProduct)),
-    images: localProduct ? localProduct.images : stripeProduct.images,
-    longDescription: localProduct?.longDescription || stripeProduct.description,
-    variants: localProduct?.variants || [],
-    hasSizes: localProduct?.hasSizes,
-    salePrice: localProduct?.salePrice,
-  };
-
-  return <ProductDetail product={enrichedProduct} />;
+      {/* 2. Sezione Correlati */}
+      {relatedProducts.length > 0 && (
+        <section className="container mx-auto px-6 py-24 border-t border-neutral-100">
+            <h3 className="text-3xl font-black italic uppercase mb-12">Potrebbe interessarti</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {relatedProducts.map((p) => (
+                <ProductCard key={p.id} product={p} />
+            ))}
+            </div>
+        </section>
+        )}
+    </main>
+  );
 }
