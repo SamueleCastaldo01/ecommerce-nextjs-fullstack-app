@@ -62,7 +62,7 @@ export default async function Home() {
               height={400}
               sizes="(max-width: 768px) 100vw, 50vw"
               quality={95}
-              className="relative rounded-2xl shadow-2xl transition-all duration-700 group-hover:scale-[1.03] object-cover aspect-[3/2] w-full h-auto"
+              className="relative rounded-2xl shadow-[0_0_40px_-14px_rgba(0,0,0,0.7)] transition-all duration-700 group-hover:scale-[1.03] object-cover aspect-[3/2] w-full h-auto"
               priority
             />
           </div>
