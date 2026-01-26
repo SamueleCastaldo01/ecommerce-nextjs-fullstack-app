@@ -24,7 +24,7 @@ export default function TermsPage() {
             1. Oggetto del Servizio
           </h2>
           <p>
-            Clean Studio offre prodotti realizzati tramite tecnologia di produzione additiva (stampa 3D). Ogni pezzo è realizzato su ordinazione o in piccole serie. A causa della natura della stampa 3D, piccole variazioni superficiali o micro-imperfezioni sono caratteristiche intrinseche del processo produttivo e non costituiscono difetti di conformità.
+            Clean Studio offre prodotti realizzati tramite tecnologia di produzione additiva (stampa 3D). Ogni prodotto è realizzato su ordinazione o in piccole serie. A causa della natura della stampa 3D, piccole variazioni superficiali o micro-imperfezioni sono caratteristiche intrinseche del processo produttivo e non costituiscono difetti di conformità.
           </p>
         </section>
 

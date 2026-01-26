@@ -23,7 +23,7 @@ export default function ShippingPage() {
             <h2 className="font-black italic uppercase tracking-tighter text-xl">Produzione On-Demand</h2>
           </div>
           <p className="text-neutral-500 text-sm leading-relaxed font-medium">
-            Non abbiamo magazzini polverosi. Ogni pezzo viene stampato 3D appositamente per te dopo l&apos;ordine. 
+            Non abbiamo magazzini polverosi. Ogni prodotto viene stampato 3D appositamente per te dopo l&apos;ordine. 
             Il processo di stampa e rifinitura richiede solitamente <strong>2-5 giorni lavorativi</strong>.
           </p>
         </div>

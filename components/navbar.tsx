@@ -93,7 +93,7 @@ export const Navbar = () => {
                   }
                 }}
               >
-                {/* Questo è il pezzo da aggiungere */}
+                {/* Questo è il prodotto da aggiungere */}
                 <UserButton.MenuItems>
                   <UserButton.Link
                     label="I miei Ordini"

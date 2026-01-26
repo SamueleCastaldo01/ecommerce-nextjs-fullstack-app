@@ -10,7 +10,7 @@ const FAQS = [
     questions: [
       {
         q: "Come vengono realizzati i prodotti?",
-        a: "Ogni pezzo è unico, progettato digitalmente e realizzato tramite stampa 3D ad alta precisione nel nostro studio. Questo processo ci permette di creare forme geometriche impossibili da ottenere con i metodi tradizionali."
+        a: "Ogni prodotto è unico, progettato digitalmente e realizzato tramite stampa 3D ad alta precisione nel nostro studio. Questo processo ci permette di creare forme geometriche impossibili da ottenere con i metodi tradizionali."
       },
       {
         q: "Quali materiali utilizzate?",
@@ -27,7 +27,7 @@ const FAQS = [
     questions: [
       {
         q: "Quanto tempo ci vuole per la produzione?",
-        a: "Non lavoriamo con grandi magazzini: ogni pezzo viene stampato su ordinazione per evitare sprechi. Il tempo di produzione varia da 2 a 5 giorni lavorativi a seconda della complessità del modello."
+        a: "Non lavoriamo con grandi magazzini: ogni prodotto viene stampato su ordinazione per evitare sprechi. Il tempo di produzione varia da 2 a 5 giorni lavorativi a seconda della complessità del modello."
       },
       {
         q: "Quali sono i tempi di spedizione?",
@@ -35,7 +35,7 @@ const FAQS = [
       },
       {
         q: "Cosa succede se il prodotto arriva danneggiato?",
-        a: "Nonostante i nostri imballaggi siano molto resistenti, può capitare. Inviaci una foto del pezzo danneggiato entro 24 ore dalla ricezione e provvederemo a stamparne uno nuovo e rispedirtelo gratuitamente."
+        a: "Nonostante i nostri imballaggi siano molto resistenti, può capitare. Inviaci una foto del prodotto danneggiato entro 24 ore dalla ricezione e provvederemo a stamparne uno nuovo e rispedirtelo gratuitamente."
       }
     ]
   }

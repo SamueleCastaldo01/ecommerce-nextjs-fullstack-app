@@ -7,10 +7,11 @@ import Link from "next/link";
 export default async function OrdersPage({
   searchParams,
 }: {
-  searchParams: { filter?: string };
+  searchParams: Promise<{ filter?: string }>;
 }) {
   // Prendiamo il filtro dai parametri dell'URL, default "all"
-  const currentFilter = searchParams.filter || "30";
+  const params = await searchParams; 
+  const currentFilter = params.filter || "30";
   const orders = await getUserOrders(currentFilter);
 
   const filterOptions = [

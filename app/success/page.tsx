@@ -68,7 +68,7 @@ export default function SuccessPage() {
               <ShoppingBag size={18} className="text-neutral-400" />
             </div>
             <p className="text-sm font-medium text-neutral-600 leading-tight">
-              Inizieremo la produzione del tuo pezzo 3D nelle prossime 24 ore.
+              Inizieremo la produzione del tuo prodotto 3D nelle prossime 24 ore.
             </p>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PRODUCTS } from "@/constants/products"; 
 import { ProductCard } from "@/components/product-card";
+import NewsletterSection from "@/components/NewsletterSection";
 
 export default async function Home() {
   // Recupero prodotti da Stripe
@@ -91,6 +92,8 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
+      <NewsletterSection />
     </div>
   );
 }

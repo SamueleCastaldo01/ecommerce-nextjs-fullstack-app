@@ -45,6 +45,8 @@ export function Footer() {
             <div className="flex space-x-4 mb-4">
                {/* Sostituisci con le tue icone se le hai, qui uso testo per semplicità */}
                <Link target="_blank" href="https://www.tiktok.com/@cleanstudio01?_r=1&_t=ZN-93HzaQTB1YU" className="text-neutral-400 hover:text-white">Tik Tok</Link>
+               <Link target="_blank" href="https://www.vinted.it/member/75904699" className="text-neutral-400 hover:text-white">Vinted</Link>
+               <Link target="_blank" href="https://ebay.us/m/kZLbdK" className="text-neutral-400 hover:text-white">Ebay</Link>
             </div>
             <p className="text-sm text-neutral-400">{STORE_SETTINGS.INFO_EMAIL}</p>
           </div>

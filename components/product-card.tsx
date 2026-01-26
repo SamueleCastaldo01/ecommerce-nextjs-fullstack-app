@@ -65,7 +65,7 @@ export const ProductCard = ({ product }: Props) => {
               {product.name}
             </h3>
             <p className="text-sm text-neutral-400 font-medium italic leading-relaxed">
-              {product.shortDescription || "Pezzo unico stampato in 3D"}
+              {product.shortDescription || "prodotto unico stampato in 3D"}
             </p>
           </div>
 

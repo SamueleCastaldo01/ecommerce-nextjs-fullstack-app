@@ -28,7 +28,7 @@ export default function CheckoutPage() {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-3xl font-bold mb-4">Il tuo carrello è vuoto</h2>
-        <p className="text-neutral-500 mb-8">Aggiungi qualche pezzo unico alla tua collezione.</p>
+        <p className="text-neutral-500 mb-8">Aggiungi qualche prodotto unico alla tua collezione.</p>
         <Button asChild className="rounded-full px-8">
           <Link href="/products">Torna allo Shop</Link>
         </Button>

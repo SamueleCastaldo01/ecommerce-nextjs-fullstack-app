@@ -139,7 +139,7 @@ export default async function CategoryPage({
       ) : (
         <div className="py-32 text-center border-2 border-dashed border-neutral-100 rounded-[3rem]">
           <p className="italic text-neutral-300 font-medium text-lg text-balance">
-             Nessun pezzo corrisponde ai filtri selezionati in questa categoria.
+             Nessun prodotto corrisponde ai filtri selezionati in questa categoria.
           </p>
         </div>
       )}

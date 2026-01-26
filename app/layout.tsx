@@ -28,7 +28,7 @@ export default function RootLayout({
             easing="ease"       
             speed={300}         
           />
-          <main className="flex-grow container mx-auto px-4 py-8">
+          <main className="flex-grow container px-4 py-8">
             {children}
           </main>
           <Footer />
